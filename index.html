@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>3D Intro Website</title>
+  <title>IDER University 3D Intro</title>
   <style>
     body {
       margin: 0;
@@ -11,48 +11,288 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Welcome Text */
     #text {
       position: absolute;
       top: 20px;
       width: 100%;
       text-align: center;
       color: white;
+      font-size: 32px;
+      font-weight: bold;
+      z-index: 15; /* canvas болон товчлууруудаас дээр */
+      text-shadow: 0 0 10px cyan, 0 0 20px cyan;
+    }
+
+    /* Info Footer */
+    #info {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      z-index: 15;
+    }
+
+    /* Buttons container */
+    #buttonsContainer {
+      position: absolute;
+      top: 80px; /* welcome text-ийн доор байрлуулсан */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 16; /* text-с дээш */
+    }
+
+    /* Buttons style */
+    #buttonsContainer button {
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      background: cyan;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,255,255,0.5);
+    }
+
+    #buttonsContainer button:hover {
+      background: #00bcd4;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,255,255,0.7);
+    }
+
+    /* Popup overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      color: white;
+      overflow-y: auto;
+      padding: 40px;
+      z-index: 20;
+      box-sizing: border-box;
+    }
+
+    .overlay h2 {
+      color: cyan;
+      text-align: center;
+    }
+
+    .closeOverlay {
+      position: fixed;
+      top: 20px;
+      right: 30px;
       font-size: 24px;
-      z-index: 10;
+      font-weight: bold;
+      color: cyan;
+      cursor: pointer;
+    }
+
+    /* Tree Diagram */
+    .tree ul {
+      padding-top: 20px;
+      position: relative;
+      list-style-type: none;
+    }
+
+    .tree li {
+      float: left;
+      text-align: center;
+      list-style-type: none;
+      position: relative;
+      padding: 20px 5px 0 5px;
+    }
+
+    .tree li::before, .tree li::after {
+      content: '';
+      position: absolute; 
+      top: 0; 
+      right: 50%;
+      border-top: 1px solid white;
+      width: 50%; 
+      height: 20px;
+    }
+    .tree li::after{
+      right: auto; 
+      left: 50%;
+      border-left: 1px solid white;
+    }
+
+    .tree li:only-child::before, .tree li:only-child::after {
+      display: none;
+    }
+
+    .tree li div {
+      border: 1px solid cyan;
+      padding: 8px 12px;
+      display: inline-block;
+      border-radius: 6px;
+      color: white;
+      background: rgba(0,255,255,0.1);
+    }
+
+    /* Overlay content scrollable */
+    .overlayContent {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Canvas */
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<div id="text">Welcome To My 3D Website 🚀</div>
+<div id="text">Welcome to IDER University!!! 🚀</div>
+
+<div id="buttonsContainer">
+  <button id="aboutBtn">Бидний тухай</button>
+  <button id="structureBtn">Бүтэц зохион байгуулалт</button>
+  <button id="historyBtn">Түүхэн хэлхээс</button>
+</div>
+
+<div id="info">
+  <p>Official Website: <a href="https://ider.edu.mn" target="_blank" style="color:cyan;">ider.edu.mn</a></p>
+  <p>Address: Ulaanbaatar, Mongolia | Contact: +976 1234 5678</p>
+  <p>Email: info@ider.edu.mn</p>
+</div>
+
+<!-- About Overlay -->
+<div id="aboutOverlay" class="overlay">
+  <span class="closeOverlay" id="closeAbout">&times;</span>
+  <div class="overlayContent">
+    <h2>SKILL ASPIRATION 2040 Initiatives</h2>
+    <p>Supported by Faculty and Students at Ider University</p>
+    <p>Ider University is committed to developing students’ professional competencies in alignment with the Skill Aspiration 2040 framework. Through collaborative initiatives led by faculty members and students, the University provides structured opportunities for skill development and practical training.</p>
+
+    <h3>Accreditation</h3>
+    <ul>
+      <li>2002 AND 2008 ACCREDITED (BY MNCEA)</li>
+      <li>2013 AND 2022 ATTESTED BY THE MINISTRY OF EDUCATION</li>
+      <li>2014 RECEIVED INTERNATIONAL ACCREDITATION /ACBSP/</li>
+      <li>2019 ACCREDITED BY THE 3RD TIME (BY MNCEA)</li>
+      <li>2027 ACCREDITED BY THE 4TH TIME (BY MNCEA)</li>
+    </ul>
+
+    <h3>Key Initiatives</h3>
+    <ul>
+      <li>Student training camps and professional workshops</li>
+      <li>“Polishing-up our skills” events</li>
+      <li>Specialized laboratories supporting applied learning</li>
+      <li>Domestic and international internship opportunities</li>
+      <li>Career pathways linked to high-demand and competitive employment sectors</li>
+    </ul>
+
+    <h3>Institutional Status</h3>
+    <p>A Public, Non-Governmental University. Since 2013, Ider University has operated as a public, non-governmental higher education institution.</p>
+
+    <h3>Why Choose Ider University</h3>
+    <ul>
+      <li>International cooperation and academic exchange programs</li>
+      <li>Inclusive and innovative campus culture</li>
+      <li>Wide range of scholarships and support</li>
+      <li>Supportive learning environment with dormitories, modern facilities, and sports infrastructure</li>
+      <li>Central location in the capital city</li>
+    </ul>
+
+    <h3>Leadership in Online Education</h3>
+    <p>Accessible learning beyond borders with scalable, user-friendly digital platforms and automated assessment systems.</p>
+
+    <h3>Academic Programs</h3>
+    <p>Integrated online and blended learning models across Bachelor’s, Master’s, and Doctoral programs ensuring quality and flexibility.</p>
+  </div>
+</div>
+
+<!-- Structure Overlay -->
+<div id="structureOverlay" class="overlay">
+  <span class="closeOverlay" id="closeStructure">&times;</span>
+  <div class="overlayContent">
+    <h2>Идэр Их Сургууль – Бүтэц, зохион байгуулалт</h2>
+    <div class="tree">
+      <ul>
+        <li>
+          <div>Удирдах зөвлөл</div>
+          <ul>
+            <li><div>Зөвлөхүүдийн танхим</div></li>
+            <li>
+              <div>Ерөнхий захирал</div>
+              <ul>
+                <li><div>Эрдэм шинжилгээ эрхэлсэн захирал</div></li>
+                <li><div>Хамтын ажиллагаа эрхэлсэн захирал</div></li>
+                <li><div>Захиргааны зөвлөл</div>
+                  <ul>
+                    <li><div>Аж ахуйн дарга</div></li>
+                    <li><div>Бүрэлдэхүүн сургуулиуд</div>
+                      <ul>
+                        <li><div>Тэнхмүүд</div>
+                          <ul>
+                            <li><div>Сургалтын алба</div></li>
+                            <li><div>Номын сан</div></li>
+                            <li><div>Хүнсний технологийн тэнхим</div></li>
+                            <li><div>Нийгмийн ажил-нийгмийн ухааны тэнхим</div></li>
+                            <li><div>Монгол хэл, сэтгүүлзүйн тэнхим</div></li>
+                            <li><div>Бизнесийн удирдлагын тэнхим</div></li>
+                            <li><div>Нягтлан бодох бүртгэлийн тэнхим</div></li>
+                            <li><div>Гадаад хэлний тэнхим</div></li>
+                            <li><div>Боловсрол судлал аргазүйн тэнхим</div></li>
+                            <li><div>Мэдээлэл технологийн тэнхим</div></li>
+                            <li><div>Аж ахуйн алба</div></li>
+                            <li><div>Дотуур байр</div></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- History Overlay -->
+<div id="historyOverlay" class="overlay">
+  <span class="closeOverlay" id="closeHistory">&times;</span>
+  <div class="overlayContent">
+    <h2>Түүх</h2>
+    <div style="text-align:center; margin:20px 0;">
+      <img src="imagehistory.jpg" alt="Түүх" style="max-width:80%; height:auto; border:2px solid cyan; border-radius:8px;">
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-
 <script>
+  // 3D объект
   const scene = new THREE.Scene();
-
-  const camera = new THREE.PerspectiveCamera(
-    75, window.innerWidth / window.innerHeight, 0.1, 1000
-  );
-
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
   const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x00ffff,
-    metalness: 0.8,
-    roughness: 0.2
-  });
-
+  const material = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.8, roughness: 0.2 });
   const object = new THREE.Mesh(geometry, material);
   scene.add(object);
 
   const light1 = new THREE.PointLight(0xffffff, 1);
   light1.position.set(20, 20, 20);
   scene.add(light1);
-
   const light2 = new THREE.AmbientLight(0x404040, 2);
   scene.add(light2);
 
@@ -60,13 +300,10 @@
 
   function animate() {
     requestAnimationFrame(animate);
-
     object.rotation.x += 0.01;
     object.rotation.y += 0.01;
-
     renderer.render(scene, camera);
   }
-
   animate();
 
   window.addEventListener('resize', () => {
@@ -74,7 +311,27 @@
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-</script>
 
+  // Popup logic
+  const aboutBtn = document.getElementById('aboutBtn');
+  const structureBtn = document.getElementById('structureBtn');
+  const historyBtn = document.getElementById('historyBtn');
+
+  const aboutOverlay = document.getElementById('aboutOverlay');
+  const structureOverlay = document.getElementById('structureOverlay');
+  const historyOverlay = document.getElementById('historyOverlay');
+
+  const closeAbout = document.getElementById('closeAbout');
+  const closeStructure = document.getElementById('closeStructure');
+  const closeHistory = document.getElementById('closeHistory');
+
+  aboutBtn.addEventListener('click', () => aboutOverlay.style.display = 'block');
+  structureBtn.addEventListener('click', () => structureOverlay.style.display = 'block');
+  historyBtn.addEventListener('click', () => historyOverlay.style.display = 'block');
+
+  closeAbout.addEventListener('click', () => aboutOverlay.style.display = 'none');
+  closeStructure.addEventListener('click', () => structureOverlay.style.display = 'none');
+  closeHistory.addEventListener('click', () => historyOverlay.style.display = 'none');
+</script>
 </body>
 </html>
