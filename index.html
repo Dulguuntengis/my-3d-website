@@ -11,45 +11,61 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Welcome Text */
     #text {
       position: absolute;
       top: 20px;
       width: 100%;
       text-align: center;
       color: white;
-      font-size: 28px;
+      font-size: 32px;
       font-weight: bold;
-      z-index: 10;
+      z-index: 15; /* canvas болон товчлууруудаас дээр */
+      text-shadow: 0 0 10px cyan, 0 0 20px cyan;
     }
 
+    /* Info Footer */
     #info {
       position: absolute;
-      bottom: 30px;
+      bottom: 20px;
       width: 100%;
       text-align: center;
       color: white;
-      font-size: 20px;
-      z-index: 10;
+      font-size: 18px;
+      z-index: 15;
     }
 
-    /* Popup buttons */
-    #aboutBtn, #structureBtn, #historyBtn {
+    /* Buttons container */
+    #buttonsContainer {
       position: absolute;
-      top: 20px;
-      padding: 10px 20px;
+      top: 80px; /* welcome text-ийн доор байрлуулсан */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 16; /* text-с дээш */
+    }
+
+    /* Buttons style */
+    #buttonsContainer button {
+      padding: 10px 25px;
       font-size: 16px;
       font-weight: bold;
       background: cyan;
       color: black;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      z-index: 11;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,255,255,0.5);
     }
 
-    #aboutBtn { left: 20px; }
-    #structureBtn { left: 200px; }
-    #historyBtn { left: 400px; }
+    #buttonsContainer button:hover {
+      background: #00bcd4;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,255,255,0.7);
+    }
 
     /* Popup overlay */
     .overlay {
@@ -62,7 +78,7 @@
       color: white;
       overflow-y: auto;
       padding: 40px;
-      z-index: 12;
+      z-index: 20;
       box-sizing: border-box;
     }
 
@@ -81,7 +97,7 @@
       cursor: pointer;
     }
 
-    /* Schematic diagram styles */
+    /* Tree Diagram */
     .tree ul {
       padding-top: 20px;
       position: relative;
@@ -129,22 +145,28 @@
       max-width: 1000px;
       margin: 0 auto;
     }
+
+    /* Canvas */
+    canvas {
+      display: block;
+    }
   </style>
 </head>
 <body>
 
 <div id="text">Welcome to IDER University!!! 🚀</div>
 
+<div id="buttonsContainer">
+  <button id="aboutBtn">Бидний тухай</button>
+  <button id="structureBtn">Бүтэц зохион байгуулалт</button>
+  <button id="historyBtn">Түүхэн хэлхээс</button>
+</div>
+
 <div id="info">
   <p>Official Website: <a href="https://ider.edu.mn" target="_blank" style="color:cyan;">ider.edu.mn</a></p>
   <p>Address: Ulaanbaatar, Mongolia | Contact: +976 1234 5678</p>
   <p>Email: info@ider.edu.mn</p>
 </div>
-
-<!-- Buttons -->
-<button id="aboutBtn">Бидний тухай</button>
-<button id="structureBtn">Бүтэц зохион байгуулалт</button>
-<button id="historyBtn">Түүхэн хэлхээс</button>
 
 <!-- About Overlay -->
 <div id="aboutOverlay" class="overlay">
@@ -242,16 +264,15 @@
   </div>
 </div>
 
+
 <!-- History Overlay -->
 <div id="historyOverlay" class="overlay">
   <span class="closeOverlay" id="closeHistory">&times;</span>
   <div class="overlayContent">
     <h2>Түүх</h2>
     <div style="text-align:center; margin:20px 0;">
-      <!-- Зураг энд -->
       <img src="imagehistory.jpg" alt="Түүх" style="max-width:80%; height:auto; border:2px solid cyan; border-radius:8px;">
     </div>
-    <p>Энд Идэр их сургуулийн түүхийг харуулсан мэдээлэл байрлана.</p>
   </div>
 </div>
 
