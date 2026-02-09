@@ -43,6 +43,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/SVGLoader.js"></script>
 
 <script>
   const scene = new THREE.Scene();
@@ -55,35 +56,47 @@
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x00ffff,
-    metalness: 0.8,
-    roughness: 0.2
-  });
-
-  const object = new THREE.Mesh(geometry, material);
-  scene.add(object);
-
   const light1 = new THREE.PointLight(0xffffff, 1);
-  light1.position.set(20, 20, 20);
+  light1.position.set(50, 50, 50);
   scene.add(light1);
 
   const light2 = new THREE.AmbientLight(0x404040, 2);
   scene.add(light2);
 
-  camera.position.z = 30;
+  camera.position.z = 50;
 
-  function animate() {
-    requestAnimationFrame(animate);
+  // SVG Loader ашиглан логог 3D болгох
+  const loader = new THREE.SVGLoader();
+  loader.load('ider_logo.svg', function(data){
+    const paths = data.paths;
+    const group = new THREE.Group();
 
-    object.rotation.x += 0.01;
-    object.rotation.y += 0.01;
+    paths.forEach(function(path){
+      const shapes = path.toShapes(true);
+      shapes.forEach(function(shape){
+        const geometry = new THREE.ExtrudeGeometry(shape, { 
+          depth: 5, 
+          bevelEnabled: true, 
+          bevelThickness: 1, 
+          bevelSize: 0.5 
+        });
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ffff });
+        const mesh = new THREE.Mesh(geometry, material);
+        group.add(mesh);
+      });
+    });
 
-    renderer.render(scene, camera);
-  }
+    group.scale.set(0.1, 0.1, 0.1); // хэмжээ тохируулах
+    scene.add(group);
 
-  animate();
+    // Animate
+    function animate(){
+      requestAnimationFrame(animate);
+      group.rotation.y += 0.01; // логог эргүүлэх
+      renderer.render(scene, camera);
+    }
+    animate();
+  });
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
