@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>3D Intro Website</title>
+  <title>IDER University 3D Intro</title>
   <style>
     body {
       margin: 0;
@@ -17,14 +17,30 @@
       width: 100%;
       text-align: center;
       color: white;
-      font-size: 24px;
+      font-size: 28px;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    #info {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 20px;
       z-index: 10;
     }
   </style>
 </head>
 <body>
 
-<div id="text">Welcome To My 3D Website 🚀</div>
+<div id="text">Welcome to IDER University 🚀</div>
+<div id="info">
+  <p>Official Website: <a href="https://ider.edu.mn" target="_blank" style="color:cyan;">ider.edu.mn</a></p>
+  <p>Address: Ulaanbaatar, Mongolia | Contact: +976 1234 5678</p>
+  <p>Email: info@ider.edu.mn</p>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 
